@@ -3,11 +3,14 @@ ft_tuple = ("Hello", "toto!")
 ft_set = {"Hello", "tutu!"}
 ft_dict = {"Hello": "titi!"}
 
-# ordered : elements have a defined order, and that order will not change.
-# unordered : order of use/apparition of elements is not guaranteed.
-# mutable : can be modified after creation.
-# immutable : cannot be modified after creation
-#    if modif needed, you have to declare a new one
+"""main characteristics of data structures:
+
+ ordered : elements have a defined order, and that order will not change.
+    unordered : order of use/apparition of elements is not guaranteed.
+    mutable : can be modified after creation.
+    immutable : cannot be modified after creation
+       if modif needed, you have to declare a new one
+"""
 
 
 # lists are ordered, mutable. They can contain duplicates
