@@ -1,5 +1,5 @@
 from sys import argv
-import ft_filter
+from ft_filter import ft_filter
 
 
 
@@ -22,6 +22,10 @@ def main():
     truthy_values = ft_filter(isanumber, ft_set)
     print(set(truthy_values))
 
+	# aquarium_tanks = [11, False, 18, 21, "", 12, 34, 0, [], {}]
+	# lambda word : len word > N, iterator
+	# print(test)
+    # print(official)
 
 
 

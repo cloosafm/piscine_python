@@ -16,11 +16,11 @@ It will display the sum of its:
 def check_for_input(argv) -> str:
     if not argv:
         print("Please provide a string:")
-        line = stdin.read()
-        return line.strip()  # remove trailing newline
+        line = stdin.readline()
+        return line
     if len(argv) > 1:
         raise AssertionError("more than one argument is provided")
-    return argv[0].strip()  # remove trailing newline
+    return argv[0]
 
 
 def ft_ispunct(char) -> bool:
