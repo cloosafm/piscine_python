@@ -1,24 +1,33 @@
-Create a script that takes a number as argument, checks whether it is odd or even,
-and prints the result.
-If more than one argument is provided or if the argument is not an integer, print an
-AssertionError.
+#!/usr/bin/env python3
+from sys import argv
+
+"""
+if using 'assert' keyword, program will NOT stop if condition is false
+'assert' is not error-handling !!! more like a debugging tool
+    -> not supposed to be used with try/except
+also, if used as is, will print all the Traceback msg
+'assert' usage (msg is optional) :
+    assert len(argv) == 1, "more than one argument is provided"
+"""
 
 
-Expected output:
-$> python whatis.py 14
-I'm Even.
-$>
-$> python whatis.py -5
-I'm Odd.
-$>
-$> python whatis.py
-$>
-$> python whatis.py 0
-I'm Even.
-$>
-$> python whatis.py Hi!
-AssertionError: argument is not an integer
-$>
-$> python whatis.py 13 5
-AssertionError: more than one argument is provided
-$>
+def main(argv):
+    if not argv:
+        return  # No input, do nothing
+    try:
+        if len(argv) > 1:
+            raise AssertionError("more than one argument is provided")
+        number = int(argv[0])
+    except ValueError:
+        print("AssertionError: argument is not an integer")
+    except AssertionError as e:
+        print(f"AssertionError: {e}")
+    else:
+        if number % 2 == 0:
+            print("I'm Even.")
+        else:
+            print("I'm Odd.")
+
+
+if __name__ == "__main__":
+    main(argv[1:])
