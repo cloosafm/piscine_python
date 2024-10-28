@@ -45,8 +45,6 @@ def ft_ispunct(char) -> bool:
     punct_set = {".", "?", "!", ",", ";", ":", "–", "—", "-",
                  "(", ")", "[", "]", "{", "}", "'", "\"", "‘", "’", "…"}
     return char in punct_set
-    # if char in punct_set:
-    #     return True
 
 
 def string_stats(user_input) -> None:
@@ -71,7 +69,6 @@ def main(argv):
         print(f"AssertionError: {e}")
     else:
         string_stats(user_input)
-
 
 
 if __name__ == "__main__":
