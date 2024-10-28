@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: ft_filter_acloos
+Version: 0.0.1
+Summary: own implementation of filter() fct
+Author-email: acloos <acloos@student.42.fr>
+Project-URL: Homepage, https://github.com/cloosafm/piscine_python
+Project-URL: Issues, https://github.com/cloosafm/piscine_python/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE

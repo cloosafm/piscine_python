@@ -1,0 +1,18 @@
+[project]
+name = "ft_filter_acloos"
+version = "0.0.1"
+authors = [
+  { name="acloos", email="acloos@student.42.fr" },
+]
+description = "own implementation of filter() fct"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/cloosafm/piscine_python"
+Issues = "https://github.com/cloosafm/piscine_python/issues"

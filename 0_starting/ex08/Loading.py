@@ -4,7 +4,7 @@ def ft_tqdm(lst: range) -> None:
     progressbar every time a value is requested."""
 
     total = len(lst)
-    bar_length = 96
+    bar_length = 98
     for i, item in enumerate(lst):
         percent_complete = (i + 1) / total * 100
         num_bars = int(percent_complete * (bar_length / 100))
