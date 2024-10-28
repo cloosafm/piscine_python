@@ -47,7 +47,6 @@ def convert_to_morse(text) -> str:
     Convert a string to morse code.
     """
     text = text.upper()
-    print("text = ", text)
     for key, value in NESTED_MORSE.items():
         text = text.replace(key, value)
     return text

@@ -1,0 +1,1 @@
+Use this package as you would use the built-in function filter()

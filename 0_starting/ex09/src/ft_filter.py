@@ -1,5 +1,5 @@
-def ft_filter(function, iterable) -> iter:
-    """ft_filter(function or None, iterable) --> filter object
+def ft_filtering(function, iterable) -> iter:
+    """ft_filtering(function or None, iterable) --> filter object
 
     \rReturn an iterator yielding those items of iterable for \
     \b\b\b\bwhich function(item)

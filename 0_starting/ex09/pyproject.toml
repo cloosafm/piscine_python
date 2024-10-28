@@ -1,5 +1,5 @@
 [project]
-name = "ft_filter_acloos"
+name = "ft_filtering_acloos"
 version = "0.0.1"
 authors = [
   { name="acloos", email="acloos@student.42.fr" },

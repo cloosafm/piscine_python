@@ -1,5 +1,5 @@
 Metadata-Version: 2.1
-Name: ft_filter_acloos
+Name: ft_filtering_acloos
 Version: 0.0.1
 Summary: own implementation of filter() fct
 Author-email: acloos <acloos@student.42.fr>
@@ -11,3 +11,5 @@ Classifier: Operating System :: OS Independent
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
+
+Use this package as you would for the built-in function filter()

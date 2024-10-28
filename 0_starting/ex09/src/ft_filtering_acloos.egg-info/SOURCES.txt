@@ -1,0 +1,9 @@
+LICENSE
+README.md
+pyproject.toml
+src/__init__.py
+src/ft_filter.py
+src/ft_filtering_acloos.egg-info/PKG-INFO
+src/ft_filtering_acloos.egg-info/SOURCES.txt
+src/ft_filtering_acloos.egg-info/dependency_links.txt
+src/ft_filtering_acloos.egg-info/top_level.txt
