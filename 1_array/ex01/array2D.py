@@ -1,4 +1,4 @@
-import numpy
+from numpy import array
 
 
 def check_args(family: list, start: int, end: int):
@@ -29,7 +29,7 @@ def slice_me(family: list, start: int, end: int) -> list:
     except AssertionError as e:
         print(f"AssertionError: {e}")
         return None
-    fam_array = numpy.array(family)
+    fam_array = array(family)
     print(f"My shape is : {fam_array.shape}")
     sliced_fam = fam_array[start:end]
     print(f"My new shape is : {sliced_fam.shape}")
