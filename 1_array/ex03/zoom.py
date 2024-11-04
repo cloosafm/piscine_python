@@ -52,14 +52,22 @@ def main():
         print(animal_array)
         animal_img = Image.fromarray(animal_array)
         animal_img = ImageOps.grayscale(animal_img)
-        # animal_img = ImageOps.scale(animal_img, 5.5, Image.Resampling.BICUBIC)
-        # (left, upper, right, lower) = (0, 0, 400, 400)
-        # animal_img = ImageOps.crop(animal_img, (left, upper, right, lower))
-        # animal_img = ImageOps.fit(animal_img, (400, 400),  method=Image.Resampling.BICUBIC, bleed=0.0, centering=(0.5, 0.5))
-        (width, height) = (animal_img.width * 2, animal_img.height * 2)
-        animal_img = animal_img.resize((width, height))
 
-        # animal_img = ImageOps.fit(animal_img, (400, 400),  method=Image.Resampling.BICUBIC, bleed=0.0, centering=(0.5, 0.5))
+        # apply zoom to img
+        zoom_factor = 2
+        width, height = animal_img.size
+        new_size = (int(width * zoom_factor), int(height * zoom_factor))
+        animal_img = animal_img.resize(new_size, Image.Resampling.BICUBIC)
+
+        # crop to desired size
+        center_x, center_y = new_size[0] // 2, new_size[1] // 2
+        left = center_x - 200
+        upper = center_y - 200
+        right = center_x + 200
+        lower = center_y + 200
+
+        # Crop the image
+        animal_img = animal_img.crop((left, upper, right, lower))
 
 
         animal_img.save("zoomed_in_image.jpeg")
