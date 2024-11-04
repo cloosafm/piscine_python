@@ -1,4 +1,4 @@
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, ImageOps, ImageDraw, ImageFont
 from numpy import array
 from load_image import ft_load
 
@@ -10,47 +10,72 @@ The info are :
     - the pixel content
 """
 
+def draw_scale(image, border_width, scale_interval=50):
+    """
+    Draw a scale on the image to show dimensions.
+    
+    Args:
+        image (PIL.Image): The image on which to draw the scale.
+        border_width (int): The width of the border around the image.
+        scale_interval (int): The interval between scale marks in pixels.
+    
+    Returns:
+        PIL.Image: The image with the scale drawn on it, and a black border line.
+    """
+    draw = ImageDraw.Draw(image)
+    width, height = image.size
+    font = ImageFont.load_default()
 
-def convert_to_greyscale(image_array):
-    # Convert the image array to a PIL Image
-    img = Image.fromarray(image_array)
-    # Convert the image to greyscale
-    grey_img = img.convert('L')
-    # Convert the greyscale image back to a numpy array
-    grey_array = array(grey_img)
-    return grey_array
+    # Draw horizontal scale
+    for x in range(border_width, width - scale_interval, scale_interval):
+        draw.line((x, height - border_width, x, height - border_width + 10), fill="black")
+        draw.text((x, height - border_width + 20), str(x - border_width), fill="black", font=font)
 
+    # Draw vertical scale
+    for y in range(border_width, height - scale_interval, scale_interval):
+        draw.line((border_width, y, border_width - 10, y), fill="black")
+        draw.text((border_width - 30 , y), str(y - border_width), fill="black", font=font)
 
-# def zoom_img(img_array, new_width, new_height):
-#     img = Image.fromarray(img_array)
-#     zoomed_img = img.resize(new_width, new_height)
-#     zoomed_array = array(zoomed_img)
-#     return zoomed_array
+        draw.rectangle([(border_width, border_width), (width - border_width, height - border_width)], outline="black", width=1)
 
-from PIL import Image
+    return image
 
-def zoom_img(img, new_width, new_height):
-    zoomed_img = img.resize((new_width, new_height))
-    return zoomed_img
 
 def main():
     """
-    Check the input is valid.
-    Prints the input converted to MORSE code.
-    """
-    anim_array = ft_load("animal.jpeg")
-    if anim_array is not None:
-        print(anim_array)
-        new_width = 400
-        new_height = 400
-        zoomed_array = zoom_img(anim_array, new_width, new_height)
-        final_img = Image.fromarray(zoomed_array)
-        final_img.show()
-        # grey_array = convert_to_greyscale(zoomed_array)
-        # # print("greay shaope -", grey_array.shape) ##
 
-        # final_img = Image.fromarray(grey_array)
-        # final_img.show()
+
+
+    """
+    animal_array = ft_load("animal.jpeg")
+    if animal_array is not None:
+        print(animal_array)
+        animal_img = Image.fromarray(animal_array)
+        animal_img = ImageOps.grayscale(animal_img)
+        # animal_img = ImageOps.scale(animal_img, 5.5, Image.Resampling.BICUBIC)
+        # (left, upper, right, lower) = (0, 0, 400, 400)
+        # animal_img = ImageOps.crop(animal_img, (left, upper, right, lower))
+        # animal_img = ImageOps.fit(animal_img, (400, 400),  method=Image.Resampling.BICUBIC, bleed=0.0, centering=(0.5, 0.5))
+        (width, height) = (animal_img.width * 2, animal_img.height * 2)
+        animal_img = animal_img.resize((width, height))
+
+        # animal_img = ImageOps.fit(animal_img, (400, 400),  method=Image.Resampling.BICUBIC, bleed=0.0, centering=(0.5, 0.5))
+
+
+        animal_img.save("zoomed_in_image.jpeg")
+
+        new_animal_img = ft_load("zoomed_in_image.jpeg")
+        print(new_animal_img)
+        new_animal_img = Image.fromarray(new_animal_img)
+
+        # Add a white border and a scale
+        border_width = 35
+        new_animal_img = ImageOps.expand(new_animal_img, border=border_width, fill="white")
+        new_animal_img = draw_scale(new_animal_img, border_width)
+
+
+        new_animal_img.show()
+
 
 if __name__ == "__main__":
     main()

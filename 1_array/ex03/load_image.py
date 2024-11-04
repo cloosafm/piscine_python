@@ -4,7 +4,8 @@ from numpy import array
 
 def ft_load(path: str) -> array:
     """Load an image.
-     Print its format, and its pixels content in RGB format
+     Print its format (height, width, number of channels).
+     Then its pixels content in RGB format.
     """
     try:
         img = Image.open(path)
