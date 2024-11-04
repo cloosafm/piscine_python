@@ -54,10 +54,10 @@ def main():
         animal_img = ImageOps.grayscale(animal_img)
 
         # apply zoom to img
-        zoom_factor = 2
+        zoom_factor = 1
         width, height = animal_img.size
         new_size = (int(width * zoom_factor), int(height * zoom_factor))
-        animal_img = animal_img.resize(new_size, Image.Resampling.BICUBIC)
+        # animal_img = animal_img.resize(new_size, Image.Resampling.BICUBIC)
 
         # crop to desired size
         center_x, center_y = new_size[0] // 2, new_size[1] // 2
