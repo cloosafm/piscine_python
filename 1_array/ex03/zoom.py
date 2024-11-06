@@ -50,6 +50,23 @@ def draw_scale(image: Image.Image, border_width: int,
     return image
 
 
+def ft_zoom(image: Image.Image, zoom_factor: int, new_width: int,
+            new_height: int) -> Image.Image:
+    """
+    Zooms into the image and create a window of specified size
+    """
+    width, height = image.size
+    new_size = (int(width * zoom_factor), int(height * zoom_factor))
+    image = image.resize(new_size, Image.Resampling.BICUBIC)
+    center_x, center_y = new_size[0] // 2, new_size[1] // 2
+    left = center_x - (new_width / 2)
+    upper = center_y - (new_height / 2)
+    right = center_x + (new_width / 2)
+    lower = center_y + (new_height / 2)
+    image = image.crop((left, upper, right, lower))
+    return image
+
+
 def main():
     """
     Calls the ft_load() function to show the image info
@@ -60,24 +77,16 @@ def main():
     animal_array = ft_load("animal.jpeg")
     if animal_array is not None:
         print(animal_array)
+        # create image from numpy array
         animal_img = Image.fromarray(animal_array)
+        # alter image to greyscale
         animal_img = ImageOps.grayscale(animal_img)
 
-        # apply zoom to img
+        # apply zoom and cropping to img
         zoom_factor = 1.25
-        width, height = animal_img.size
-        new_size = (int(width * zoom_factor), int(height * zoom_factor))
-        animal_img = animal_img.resize(new_size, Image.Resampling.BICUBIC)
-
-        # crop to desired size
-        center_x, center_y = new_size[0] // 2, new_size[1] // 2
         new_width = 400
         new_height = 400
-        left = center_x - (new_width / 2)
-        upper = center_y - (new_height / 2)
-        right = center_x + (new_width / 2)
-        lower = center_y + (new_height / 2)
-        animal_img = animal_img.crop((left, upper, right, lower))
+        animal_img = ft_zoom(animal_img, zoom_factor, new_width, new_height)
 
         # save and load altered image
         animal_img.save("zoomed_in_image.jpeg")
