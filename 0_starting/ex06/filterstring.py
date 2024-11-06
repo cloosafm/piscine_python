@@ -5,6 +5,8 @@ from ft_filter import ft_filter
 def check_input(argv):
     """
     Check the number of arguments.
+    Args:
+        argv (list): The arguments.
     """
     if len(argv) != 2:
         raise AssertionError("the arguments are bad")
@@ -13,6 +15,10 @@ def check_input(argv):
 def check_arg1(string) -> list:
     """
     Check that arg1 has only alphanumeric or space characters.
+    Args:
+        string (str): The string to check.
+    Returns:
+        list: The list of words from the string.
     """
     if not all(c.isalnum() or c.isspace() for c in string):
         raise AssertionError("the arguments are bad")
@@ -24,6 +30,10 @@ def check_arg1(string) -> list:
 def check_arg2(string) -> int:
     """
     Ensure arg2 is cast to int.
+    Args:
+        string (str): The string to cast to int.
+    Returns:
+        int: The integer value of the string.
     """
     number = int(string)
     if not isinstance(number, int):

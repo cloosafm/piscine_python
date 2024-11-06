@@ -14,6 +14,13 @@ It will display the sum of its:
 
 
 def check_for_input(argv) -> str:
+    """
+    Check the input string. If none given, ask for one.
+    Args:
+        argv (list): The input.
+    Returns:
+        str: The input string, if correctly provided.
+    """
     if not argv:
         print("Please provide a string:")
         line = stdin.readline()
@@ -50,7 +57,6 @@ def ft_ispunct(char) -> bool:
 def string_stats(user_input) -> None:
     """
     Print statistics about the input string.
-
     Args:
         user_input (str): The input string.
     """

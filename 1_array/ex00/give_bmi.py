@@ -5,8 +5,13 @@ def give_bmi(height: list[int | float], weight: list[int | float]) \
             -> list[int | float]:
     """
     Calculate the BMI for each person in the list.
-    BMI = weight / (height * height)
-    Units are kilograms and meters
+    BMI = weight / (height * height).
+    Units are kilograms and meters.
+    Args:
+        height (list): The list of heights.
+        weight (list): The list of weights.
+    Returns:
+        list: The list of BMIs.
     """
     height_len = len(height)
     weight_len = len(weight)
@@ -26,6 +31,11 @@ def give_bmi(height: list[int | float], weight: list[int | float]) \
 def apply_limit(bmi: list[int | float], limit: int) -> list[bool]:
     """
     Check whether given BMI is above the limit ("True") or not ("False").
+    Args:
+        bmi (list): The list of BMIs.
+        limit (int): The limit to check against.
+    Returns:
+        list: The list of booleans checking BMIs against given limit.
     """
     bmi_array = np.array(bmi)
     result = []

@@ -6,6 +6,10 @@ def ft_load(path: str) -> array:
     """Load an image.
      Print its format (height, width, number of channels).
      Then its pixels content in RGB format.
+    Args:
+        path (str): The path to the image file.
+    Returns:
+        array: The image as a numpy array.
     """
     try:
         img = Image.open(path)

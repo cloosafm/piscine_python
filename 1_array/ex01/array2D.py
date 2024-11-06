@@ -2,7 +2,12 @@ from numpy import array
 
 
 def check_args(family: list, start: int, end: int):
-    """Check the args given for the slice_me fct"""
+    """Check the args given for the slice_me fct
+    Args:
+        family  (list): The list to be sliced
+        start   (int): The start position
+        end     (int): The end position
+    """
     if not isinstance(family, list):
         raise AssertionError("need a list as 1st arg")
     if not isinstance(start | end, int):
@@ -23,7 +28,14 @@ def check_args(family: list, start: int, end: int):
 
 def slice_me(family: list, start: int, end: int) -> list:
     """Take a list, a start and end position in this list
-    Return the list sliced according to given positions"""
+    Return the list sliced according to given positions
+    Args:
+        family  (list): The list to slice
+        start   (int): The start position
+        end     (int): The end position
+    Returns:
+        list: The sliced list
+    """
     try:
         check_args(family, start, end)
     except AssertionError as e:

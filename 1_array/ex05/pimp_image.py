@@ -5,6 +5,10 @@ from numpy import dot, ndarray
 def ft_invert(land_array: ndarray) -> ndarray:
     """
     Inverts the color of the image received.
+    Args:
+        land_array (ndarray): The image to invert.
+    Returns:
+        ndarray: The inverted image.
     """
     land_invert = land_array.copy()
     land_invert = 255 - land_invert
@@ -16,6 +20,10 @@ def ft_invert(land_array: ndarray) -> ndarray:
 def ft_red(land_array: ndarray) -> ndarray:
     """
     Converts the received image to red.
+    Args:
+        land_array (ndarray): The image to convert.
+    Returns:
+        ndarray: The image converted to red.
     """
     land_red = land_array.copy()
     land_red[:, :, 1] = 0  # Green channel set to 0
@@ -28,6 +36,10 @@ def ft_red(land_array: ndarray) -> ndarray:
 def ft_green(land_array: ndarray) -> ndarray:
     """
     Converts the received image to green.
+    Args:
+        land_array (ndarray): The image to convert.
+    Returns:
+        ndarray: The image converted to green.
     """
     land_green = land_array.copy()
     land_green[:, :, 0] = 0  # Red channel set to 0
@@ -40,6 +52,10 @@ def ft_green(land_array: ndarray) -> ndarray:
 def ft_blue(land_array: ndarray) -> ndarray:
     """
     Converts the received image to blue.
+    Args:
+        land_array (ndarray): The image to convert.
+    Returns:
+        ndarray: The image converted to blue.
     """
     land_blue = land_array.copy()
     land_blue[:, :, 0] = 0  # Red channel set to 0
@@ -55,6 +71,11 @@ def ft_grey(land_array: ndarray) -> ndarray:
     Uses the luma weighted formula :
     Y'=0.299R'+0.587G'+0.114B'
     https://e2eml.school/convert_rgb_to_grayscale.html
+
+    Args:
+        land_array (ndarray): The image to convert.
+    Returns:
+        ndarray: The image converted to greyscale.
     """
     land_grey = dot(land_array[..., :3], [0.299, 0.587, 0.114])
     # the three dots mean "all preceding dimensions", to select all pixels

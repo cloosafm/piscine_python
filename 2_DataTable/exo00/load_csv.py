@@ -4,6 +4,10 @@ from pandas import DataFrame as Dataset, read_csv, errors
 def load(path: str) -> Dataset:
     """
     Returns dataset from file given in path
+    Args:
+        path (str): The path to the file.
+    Returns:
+        Dataset: The dataset as a pandas DataFrame.
     """
     try:
         data_set = read_csv(path)

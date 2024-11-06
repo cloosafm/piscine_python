@@ -56,6 +56,13 @@ def ft_zoom(image: Image.Image, zoom_factor: int, new_width: int,
             new_height: int) -> Image.Image:
     """
     Zooms into the image and create a window of specified size
+    Args:
+        image (PIL.Image): The image to zoom into.
+        zoom_factor (int): The factor by which to zoom in.
+        new_width (int): The width of the new window.
+        new_height (int): The height of the new window.
+    Returns:
+        PIL.Image: The zoomed-in image
     """
     width, height = image.size
     new_size = (int(width * zoom_factor), int(height * zoom_factor))
@@ -70,6 +77,13 @@ def ft_zoom(image: Image.Image, zoom_factor: int, new_width: int,
 
 
 def ft_transpose(image: Image.Image) -> Image.Image:
+    """
+    Transpose an image 90° to the left
+    Args:
+        image (PIL.Image): The image to transpose.
+    Returns:
+        PIL.Image: The transposed image.
+    """
     base_array = array(image)
     trans_array = zeros_like(base_array)
     width, height = image.size

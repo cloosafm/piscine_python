@@ -45,6 +45,10 @@ NESTED_MORSE = {
 def convert_to_morse(text) -> str:
     """
     Convert a string to morse code.
+    Args:
+        text (str): The string to convert.
+    Returns:
+        str: The string converted to morse code.
     """
     text = text.upper()
     for key, value in NESTED_MORSE.items():
