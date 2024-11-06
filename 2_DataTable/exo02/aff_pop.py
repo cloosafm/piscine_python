@@ -59,11 +59,16 @@ def plot_country_data(df, country1: str, country2: str) -> None:
         max_year = df_transposed.index.max()
         ax.set_xticks(range(min_year, max_year, 40))
         
-        # Customize ticks on the y-axis to be every 20 million
-        min_pop = int(min(df_transposed[country1].min(), df_transposed[country2].min()))
-        max_pop = int(max(df_transposed[country1].max(), df_transposed[country2].max()))
-        ax.set_yticks(range(min_pop, max_pop, 20_000_000))
+        # # Customize ticks on the y-axis to be every 20 million
+        # min_pop = int(min(df_transposed[country1].min(), df_transposed[country2].min()))
+        # max_pop = int(max(df_transposed[country1].max(), df_transposed[country2].max()))
+        # ax.set_yticks(range(min_pop, max_pop, 20_000_000))
         
+        # Customize ticks on the y-axis to be every 20 million, starting at 20 million
+        min_pop = max(20_000_000, int(min(df_transposed[country1].min(), df_transposed[country2].min())))
+        max_pop = int(max(df_transposed[country1].max(), df_transposed[country2].max()))
+        ax.set_yticks(range(min_pop, max_pop + 1, 20_000_000))
+
         # Apply the custom formatter to the y-axis
         formatter = ticker.EngFormatter(sep="")
         ax.yaxis.set_major_formatter(formatter)
