@@ -42,6 +42,9 @@ def plot_country_data(df, country1: str, country2: str) -> None:
             print(f"Error: The country '{country2}' does not exist.")
             return
 
+        # keep only rows between 1800 and 2050
+        df_transposed = df_transposed.loc[1800:2050]
+
         # Convert population values to floats
         df_transposed[country1] = df_transposed[country1].apply(pop_to_float)
         df_transposed[country2] = df_transposed[country2].apply(pop_to_float)
@@ -56,6 +59,8 @@ def plot_country_data(df, country1: str, country2: str) -> None:
         # Customize ticks on the x-axis
         min_year = df_transposed.index.min()
         max_year = df_transposed.index.max()
+        # min_year = 1800
+        # max_year = 2050
         ax.set_xticks(range(min_year, max_year, 40))
 
         # Customize ticks on the y-axis to be every 20 million
@@ -70,10 +75,10 @@ def plot_country_data(df, country1: str, country2: str) -> None:
         ax.yaxis.set_major_formatter(formatter)
 
         # Add labels, legend and title
-        plt.xlabel('Year')
-        plt.ylabel('Population')
-        plt.title("Population Projections")
-        plt.legend(loc='lower right')
+        ax.set_xlabel('Year')
+        ax.set_ylabel('Population')
+        ax.set_title("Population Projections")
+        ax.legend(loc='lower right')
 
         plt.show()
 
