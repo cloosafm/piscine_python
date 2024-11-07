@@ -22,14 +22,14 @@ ft_list.append("World!")
 # defined with		()
 ft_tuple = ("Hello", "France!")
 
-# sets are unordered, mutable. They CANNOT contain duplicates
+# sets are UNORDERED, mutable. They CANNOT contain duplicates
 # defined with		{}
 ft_set.discard("tutu!")
 ft_set.add("Paris!")
 
-# dictionaries are unordered, mutable (both keys and values).
+# dictionaries are UNORDERED, mutable (both keys and values).
 # The keys must be unique, the values can be duplicated
-# defined with		{}		key-value pairs are separated by a colon :
+# defined with		{}		key-value pairs are separated by a colon ':'
 ft_dict["Hello"] = "42Paris!"
 
 print(ft_list)

@@ -11,7 +11,7 @@ def all_thing_is_obj(object: any) -> int:
         case 'dict':
             print("Dict :", object.__class__)
         case 'str':
-            print(object, "is in the kitchen : ", object.__class__)
+            print(object, "is in the kitchen :", object.__class__)
         case _:
             print("Type not found")
 

@@ -20,6 +20,7 @@ def check_for_input(argv) -> str:
         argv (list): The input.
     Returns:
         str: The input string, if correctly provided.
+            To note: readline() adds a carriage return, which counts as a space
     """
     if not argv:
         print("Please provide a string:")
@@ -38,7 +39,7 @@ def ft_ispunct(char) -> bool:
     Returns:
         bool: True if the character is a punctuation mark, False otherwise.
 
-    Below is a listing of punctuation characters to create our set:
+    Below is a listing of the punctuation characters to create our set:
     https://www.yourdictionary.com/articles/english-punctuation-marks
 
     non-ascii punctuation characters with unicode:
@@ -47,7 +48,6 @@ def ft_ispunct(char) -> bool:
         U+2018	left single quotation marks
         U+2019	right single quotation marks
         U+2026	ellipsis
-
     """
     punct_set = {".", "?", "!", ",", ";", ":", "–", "—", "-",
                  "(", ")", "[", "]", "{", "}", "'", "\"", "‘", "’", "…"}

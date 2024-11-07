@@ -13,7 +13,7 @@ also, if used as is, will print all the Traceback msg
 
 def main(argv):
     if not argv:
-        return  # No input, do nothing
+        return
     try:
         if len(argv) > 1:
             raise AssertionError("more than one argument is provided")

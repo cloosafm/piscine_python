@@ -35,9 +35,10 @@ def check_arg2(string) -> int:
     Returns:
         int: The integer value of the string.
     """
-    number = int(string)
-    if not isinstance(number, int):
-        raise AssertionError("2nd arg is not an integer")
+    try:
+        number = int(string)
+    except ValueError:
+        raise AssertionError("the arguments are bad")
     return number
 
 
