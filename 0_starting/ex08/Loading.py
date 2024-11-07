@@ -7,7 +7,7 @@ def ft_tqdm(lst: range) -> None:
     """
 
     total = len(lst)
-    bar_length = 98
+    bar_length = 100
     for i, item in enumerate(lst):
         percent_complete = (i + 1) / total * 100
         num_bars = int(percent_complete * (bar_length / 100))
