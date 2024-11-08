@@ -1,5 +1,6 @@
 from load_csv import load
 from matplotlib import pyplot as plt, ticker
+import numpy as np
 
 
 
@@ -35,23 +36,27 @@ def plot_projection_life(df_gdp, df_life, year: int):
     ax.scatter(df_gdp.loc[year], df_life.loc[year])
 
 
-    # # Calculate the minimum value in the x-axis data
-    # min_gdp = df_gdp.loc[year].min()
-    # print(min_gdp)
+    # Calculate the minimum value in the x-axis data
+    min_gdp = df_gdp.loc[year].min()
 
-    # # Determine the lowest hundred value less than or equal to the minimum value
+
+    # Determine the lowest hundred value less than or equal to the minimum value
     # start_value = (min_gdp // 100) * 100
 
-    # # Calculate the maximum value in the x-axis data
-    # max_gdp = df_gdp.loc[year].max()
-    # print(max_gdp)
+    # Calculate the maximum value in the x-axis data
+    max_gdp = df_gdp.loc[year].max()
+    print(f"min_gdp = {min_gdp}, max_gdp = {max_gdp}")
 
 
-    # # Determine the lowest hundred value less than or equal to the minimum value
-    # start_value = (min_gdp // 100) * 100
+    # Determine the lowest hundred value less than or equal to the minimum value
+    start_value = (min_gdp // 100) * 100
 
-    # # Determine the highest hundred value equal to or greater than the maximum value
+    # Determine the highest hundred value equal to or greater than the maximum value
     # end_value = ((max_gdp + 99) // 100) * 100
+    # end_value = 10 ** np.ceil(np.log10(max_gdp))
+    # end_value = max_gdp * 1.1  # Increase by 10%
+    end_value = 10 ** np.floor(np.log10(max_gdp))
+    print(f"start = {start_value}, end = {end_value}")
 
     # print(f"start = {start_value}, end = {end_value}")
 
@@ -63,7 +68,9 @@ def plot_projection_life(df_gdp, df_life, year: int):
     ax.set_xscale('log')
 
     #test
-    ax.set_xlim(left=300, right = 1000)
+    # ax.set_xlim(left=300, right=10000)
+
+    ax.set_xlim(left=start_value, right=end_value)
 
    # Set custom ticks to include 300 if not shown
     xticks = [300] + [tick for tick in ax.get_xticks() if tick > 300]  # Add 300 and keep higher ticks
@@ -71,6 +78,7 @@ def plot_projection_life(df_gdp, df_life, year: int):
     # Apply the custom formatter to the x-axis
     formatter = ticker.EngFormatter(sep="")
     ax.xaxis.set_major_formatter(formatter)
+
 
     # logfmt = ticker.LogFormatterSciNotation()
     # ax.xaxis.set_minor_formatter(logfmt)
