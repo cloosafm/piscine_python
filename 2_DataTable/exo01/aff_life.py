@@ -16,7 +16,7 @@ def plot_country_data(df, country: str):
     df_transposed.columns = df_transposed.loc[df_transposed.index[0]]
     df_transposed = df_transposed.loc[df_transposed.index[1:]]
     # Set index to years, convert to int
-    df_transposed.index = df_transposed.index.astype(int)
+    df_transposed.index = df_transposed.index.astype(float)
     # Check if the specified country exists in the DataFrame
     if country not in df_transposed.columns:
         print(f"Error: The country '{country}' does not exist.")
@@ -25,8 +25,8 @@ def plot_country_data(df, country: str):
     # Plot the data for the specified country
     plt.plot(df_transposed.index, df_transposed[country])
     # Customize ticks on the x-axis
-    min_year = df_transposed.index.min()
-    max_year = df_transposed.index.max()
+    min_year = int(df_transposed.index.min())
+    max_year = int(df_transposed.index.max())
     plt.xticks(range(min_year, max_year, 40))
     # Add labels and title
     plt.xlabel('Year')

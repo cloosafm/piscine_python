@@ -21,47 +21,65 @@ def plot_projection_life(df_gdp, df_life, year: int):
     df_life = df_life.T
 
 
-    # Check if the specified year exists in the DataFrames
-    # if year not in df_gdp.index:
-    #     print(f"Error: The year {year} does not exist in gdp.")
-    #     return
-    # if year not in df_life.index:
-    #     print(f"Error: The year {year} does not exist in life.")
-    #     return
-
-
     # Set the first row of each Dataframe as the header using loc
     df_gdp.columns = df_gdp.loc[df_gdp.index[0]]
     df_gdp = df_gdp.loc[df_gdp.index[1:]]
     df_life.columns = df_life.loc[df_life.index[0]]
     df_life = df_life.loc[df_life.index[1:]]
     # Set indexes to years, convert to int
-    df_gdp.index = df_gdp.index.astype(int)
-    df_life.index = df_life.index.astype(int)
+    df_gdp.index = df_gdp.index.astype(float)
+    df_life.index = df_life.index.astype(float)
 
     # plot type : scatter
     fig, ax = plt.subplots()
     ax.scatter(df_gdp.loc[year], df_life.loc[year])
 
+
+    # # Calculate the minimum value in the x-axis data
+    # min_gdp = df_gdp.loc[year].min()
+    # print(min_gdp)
+
+    # # Determine the lowest hundred value less than or equal to the minimum value
+    # start_value = (min_gdp // 100) * 100
+
+    # # Calculate the maximum value in the x-axis data
+    # max_gdp = df_gdp.loc[year].max()
+    # print(max_gdp)
+
+
+    # # Determine the lowest hundred value less than or equal to the minimum value
+    # start_value = (min_gdp // 100) * 100
+
+    # # Determine the highest hundred value equal to or greater than the maximum value
+    # end_value = ((max_gdp + 99) // 100) * 100
+
+    # print(f"start = {start_value}, end = {end_value}")
+
+    # # Set x-axis limits to start at the calculated value
+    # ax.set_xlim(left=start_value)
+
+
     # Customize the x-axis to be logarithmic
     ax.set_xscale('log')
 
+    #test
+    ax.set_xlim(left=300, right = 1000)
+
+   # Set custom ticks to include 300 if not shown
+    xticks = [300] + [tick for tick in ax.get_xticks() if tick > 300]  # Add 300 and keep higher ticks
+    ax.set_xticks(xticks)  # Set the updated ticks
     # Apply the custom formatter to the x-axis
     formatter = ticker.EngFormatter(sep="")
     ax.xaxis.set_major_formatter(formatter)
 
-    logfmt = ticker.LogFormatterSciNotation()
-    ax.xaxis.set_minor_formatter(logfmt, minor_thresholds=)
+    # logfmt = ticker.LogFormatterSciNotation()
+    # ax.xaxis.set_minor_formatter(logfmt)
+    # # print("x ticks=", ax.get_xticks())
 
-    # Calculate the minimum value in the x-axis data
-    min_gdp = df_gdp.loc[year].min()
-
-    # Determine the lowest hundred value less than or equal to the minimum value
-    start_value = (min_gdp // 100) * 100
-
-    # Set x-axis limits to start at the calculated value
-    ax.set_xlim(left=start_value)
-
+    # # Set x-axis ticks to include the start value, end value, and other relevant ticks
+    # ticks = [start_value] + list(ax.get_xticks()) + [end_value]
+    # # ax.set_xticks(ticks)
+    # ax.set_xticks(range(start_value, end_value))
 
     # Add labels, legend and title
     ax.set_xlabel('Gross domestic product')
