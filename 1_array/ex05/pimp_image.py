@@ -2,6 +2,10 @@ from PIL import Image
 from numpy import dot, ndarray
 
 
+
+
+# add error mngmt to each fnct?
+
 def ft_invert(land_array: ndarray) -> ndarray:
     """
     Inverts the color of the image received.

@@ -30,6 +30,10 @@ def draw_scale(image: Image.Image, border_width: int,
     width, height = image.size
     font = ImageFont.load_default()
 
+# error mggmt :
+#   check all args for type
+#   check that int are all greater than 0
+
     # Draw horizontal scale
     for x in range(border_width, width - scale_interval, scale_interval):
         draw.line((x, height - border_width, x, height - border_width + 10),
@@ -62,6 +66,11 @@ def ft_zoom(image: Image.Image, zoom_factor: int, new_width: int,
     Returns:
         PIL.Image: The zoomed-in image
     """
+
+# error mngmt : 
+#   check all args for type
+#   check that int are all greater than 0
+
     width, height = image.size
     new_size = (int(width * zoom_factor), int(height * zoom_factor))
     image = image.resize(new_size, Image.Resampling.BICUBIC)
@@ -86,20 +95,26 @@ def main():
         print(animal_array)
         # create image from numpy array
         animal_img = Image.fromarray(animal_array)
+#  may want to check that array was successfully converted to image
+
         # alter image to greyscale
         animal_img = ImageOps.grayscale(animal_img)
+
+
 
         # apply zoom and cropping to img
         zoom_factor = 1.25
         new_width = 400
         new_height = 400
         animal_img = ft_zoom(animal_img, zoom_factor, new_width, new_height)
+#  may want to check that ft_zoom was successful
 
         # save and load altered image
         animal_img.save("zoomed_in_image.jpeg")
         new_animal_img = ft_load("zoomed_in_image.jpeg")
         print(new_animal_img)
         new_animal_img = Image.fromarray(new_animal_img)
+#  may want to check that array was successfully converted to image
 
         # Add a white border and a scale
         border_width = 35

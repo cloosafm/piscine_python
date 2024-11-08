@@ -84,6 +84,7 @@ def ft_transpose(image: Image.Image) -> Image.Image:
     Returns:
         PIL.Image: The transposed image.
     """
+# error mngmt
     base_array = array(image)
     trans_array = zeros_like(base_array)
     width, height = image.size
@@ -101,6 +102,9 @@ def main():
     Shows info post-alterations
     Displays image
     """
+# look at zoom.py for general error mngmt
+
+
     animal_array = ft_load("animal.jpeg")
     if animal_array is not None:
         print(animal_array)
