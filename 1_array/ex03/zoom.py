@@ -66,12 +66,23 @@ def ft_zoom(image: np.array, zoom_factor: float, new_width: int,
     if not isinstance(new_height, int) or new_height < 0:
         raise ValueError("The new height must be an int greater than 0")
 
-    new_array = image[:new_height, :new_width, :channels]
+    # new_array = image[:new_height, :new_width, :channels]
 
-    print(f"New shape after slicing: {new_array.shape} \
-          or ({new_height}, {new_width})")
-    print(new_array)
-    return new_array
+    # print(f"New shape after slicing: {new_array.shape} \
+    #       or ({new_height}, {new_width})")
+    # print(new_array)
+    # return new_array
+
+    if channels == 1:
+        array = array[:, :, :1]  # Convert to grayscale if necessary
+    array = array.astype(np.uint8)  # Ensure data type is uint8
+    
+    # Apply zoom and cropping (this is a placeholder, implement your own logic)
+    zoomed_array = np.array(Image.fromarray(array).resize((new_w, new_h)))
+    print(zoomed_array)
+    return zoomed_array
+
+
 
 
 def main():
