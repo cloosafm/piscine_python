@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 def ft_zoom(array: np.array, zoom_factor: float, new_w: int,
             new_h: int, channels) -> np.array:
     """
-    Zooms into the image and create a window of specified size
+    Zoom into the array to create a window of specified size
+    Print the new shape and array
     Args:
         array (numpy array): The array to resize into.
         zoom_factor (int): The factor by which to zoom in.
@@ -17,7 +18,7 @@ def ft_zoom(array: np.array, zoom_factor: float, new_w: int,
         np.array: The resized array
     """
     if not isinstance(array, np.ndarray):
-        raise TypeError("The image is not an array")
+        raise TypeError("This is not an array")
     if not isinstance(zoom_factor, float) or zoom_factor <= 0:
         raise ValueError("The zoom factor must be a positive float")
     if not isinstance(new_w, int) or new_w < 0:
@@ -57,9 +58,6 @@ def main():
             # zoom and crop array, then print it and its shape
             animal_array = ft_zoom(animal_array, zoom_factor, new_width,
                                    new_height, channels)
-            print(f"New shape after slicing: {animal_array.shape} or\
-                  ({new_height},{new_width})")
-            print(animal_array)
 
             # display the image with matplotlib
             plt.imshow(animal_array, cmap='gray' if channels == 1 else None)
