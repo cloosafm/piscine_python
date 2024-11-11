@@ -1,6 +1,6 @@
 from PIL import Image, ImageOps, ImageDraw, ImageFont
 from load_image import ft_load
-from numpy import array, zeros_like, asarray
+from numpy import array
 
 
 def draw_scale(image: Image.Image, border_width: int,
@@ -45,7 +45,7 @@ def draw_scale(image: Image.Image, border_width: int,
     return image
 
 
-def ft_zoom(image: Image.Image, zoom_factor: int, new_width: int,
+def ft_zoom(image: Image.Image, zoom_factor: float, new_width: int,
             new_height: int) -> Image.Image:
     """
     Zooms into the image and create a window of specified size
@@ -78,26 +78,6 @@ def ft_zoom(image: Image.Image, zoom_factor: int, new_width: int,
     return image
 
 
-def ft_transpose(image: Image.Image) -> Image.Image:
-    """
-    Transpose an image 90° to the left
-    Args:
-        image (PIL.Image): The image to transpose.
-    Returns:
-        PIL.Image: The transposed image.
-    """
-    if not isinstance(image, Image.Image):
-        raise TypeError("traThe image is not a PIL Image")
-    base_array = array(image)
-    trans_array = zeros_like(base_array)
-    width, height = image.size
-    for i in range(width):
-        for j in range(height):
-            trans_array[i][j] = base_array[j][i]
-    trans_img = Image.fromarray(trans_array)
-    return trans_img
-
-
 def main():
     """
     Load an image, prints its info, modify the image, displays it.
@@ -110,7 +90,6 @@ def main():
         - add a zoom factor
         - resize
         - add a border and a scale
-        - rotate to the left
     """
     animal_array = ft_load("animal.jpeg")
     if animal_array is not None:
@@ -123,7 +102,7 @@ def main():
             return
 
         # alter image to greyscale
-        # animal_img = ImageOps.grayscale(animal_img)
+        animal_img = ImageOps.grayscale(animal_img)
         # animal_img = animal_img.convert('L')
 
         # apply zoom and cropping to img
@@ -132,9 +111,6 @@ def main():
         new_h = 400
         try:
             animal_img = ft_zoom(animal_img, zoom_factor, new_w, new_h)
-            # transpose 90° to the left - without the transpose method
-            animal_img = ft_transpose(animal_img)
-
             # print new array and its shape
             animal_array = array(animal_img)
             print(f"New shape after slicing: {animal_array.shape}")
@@ -148,7 +124,7 @@ def main():
 
             animal_img.show()
         except Exception as e:
-            print(f"An error has occurred: {e}")
+            print(f"An error occurred: {e}")
             return
 
 
