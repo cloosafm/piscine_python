@@ -1,21 +1,29 @@
 from load_csv import load
 from matplotlib import pyplot as plt, ticker
+from pint import UnitRegistry
 
 
-def pop_to_float(pop_str: str) -> float:
-    """
-    Convert a population string with suffix to a float.
-    Args:
-        pop_str (str): The population string (e.g., '3.28M').
-    Returns:
-        float: The population as a float.
-    """
-    if pop_str.endswith('M'):
-        return float(pop_str[:-1]) * 1e6
-    elif pop_str.endswith('k'):
-        return float(pop_str[:-1]) * 1e3
-    else:
-        return float(pop_str)
+class Convert:
+    """Class for converting strs with units to actual numbers"""
+    def __init__(self):
+        """Constructor for the Convert class"""
+        self.ureg = UnitRegistry()
+        self.ureg.define("thousand = 1e3 = k")
+        self.ureg.define("million = 1e6 = M")
+        self.ureg.define("billion = 1e9 = B")
+
+    def convert_to_float(self, value: str) -> float:
+        """
+        Convert a string with units to a float.
+        Args:
+            value (str): The string with units (e.g., '3.28M').
+        Returns:
+            float: The value as a float.
+        """
+        try:
+            return float(value)
+        except ValueError:
+            return self.ureg(value).to_base_units().magnitude
 
 
 def plot_country_data(df, country1: str, country2: str) -> None:
@@ -27,46 +35,44 @@ def plot_country_data(df, country1: str, country2: str) -> None:
         country2 (str): The name of the 2nd country to plot.
             """
     # Transpose the DataFrame
-    df_transposed = df.T
+    df = df.T
     # Set the first row as the header using loc
-    df_transposed.columns = df_transposed.loc[df_transposed.index[0]]
-    df_transposed = df_transposed.loc[df_transposed.index[1:]]
+    df.columns = df.loc[df.index[0]]
+    df = df.loc[df.index[1:]]
     # Set index to years, convert to int
-    df_transposed.index = df_transposed.index.astype(float)
+    df.index = df.index.astype(float)
     # Check if the specified countries exist in the DataFrame
-    if country1 not in df_transposed.columns:
+    if country1 not in df.columns:
         print(f"Error: The country '{country1}' does not exist.")
         return
-    if country2 not in df_transposed.columns:
+    if country2 not in df.columns:
         print(f"Error: The country '{country2}' does not exist.")
         return
 
     # keep only rows between 1800 and 2050
-    df_transposed = df_transposed.loc[1800:2050]
+    df = df.loc[1800:2050]
 
     # Convert population values to floats
-    df_transposed[country1] = df_transposed[country1].apply(pop_to_float)
-    df_transposed[country2] = df_transposed[country2].apply(pop_to_float)
-
+    convert = Convert()
+    df[country1] = df[country1].apply(convert.convert_to_float)
+    df[country2] = df[country2].apply(convert.convert_to_float)
     # Plot the data for the specified countries
     fig, ax = plt.subplots()
-    ax.plot(df_transposed.index, df_transposed[country1], label=country1,
+    ax.plot(df.index, df[country1], label=country1,
             color='b')
-    ax.plot(df_transposed.index, df_transposed[country2], label=country2,
+    ax.plot(df.index, df[country2], label=country2,
             color='g')
 
     # Customize ticks on the x-axis
-    min_year = int(df_transposed.index.min())
-    max_year = int(df_transposed.index.max())
-    # min_year = 1800
-    # max_year = 2050
+    min_year = int(df.index.min())
+    max_year = int(df.index.max())
     ax.set_xticks(range(min_year, max_year, 40))
 
     # Customize ticks on the y-axis to be every 20 million
-    min_pop = max(20_000_000, int(min(df_transposed[country1].min(),
-                                      df_transposed[country2].min())))
-    max_pop = int(max(df_transposed[country1].max(),
-                      df_transposed[country2].max()))
+    min_pop = max(20_000_000, int(min(df[country1].min(),
+                                      df[country2].min())))
+    max_pop = int(max(df[country1].max(),
+                      df[country2].max()))
     ax.set_yticks(range(min_pop, max_pop + 1, 20_000_000))
 
     # Apply the custom formatter to the y-axis

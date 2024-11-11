@@ -1,10 +1,56 @@
 from load_csv import load
 from matplotlib import pyplot as plt, ticker
+import mplcursors
 import numpy as np
 
 
+def str_to_float(value):
+    """
+    Convert a string to a float.
+    
+    Args:
+        value (str): The string to convert.
+    
+    Returns:
+        float: The converted float value.
+    """
+    if isinstance(value, str):
+        if value.endswith('M'):
+            return float(value[:-1]) * 1e6
+        elif value.endswith('K'):
+            return float(value[:-1]) * 1e3
+    return float(value)
 
-def plot_projection_life(df_gdp, df_life, year: int):
+def handleEvent(event, df_gdp, df_life, year, countries):
+    """
+    Handle the event when a point in the scatter plot is clicked.
+    
+    Args:
+        event: The event object.
+        df_gdp (pd.DataFrame): The GDP DataFrame.
+        df_life (pd.DataFrame): The life expectancy DataFrame.
+        year (int): The year for the projection.
+        countries (list): The list of country names.
+    """
+    if event.inaxes:
+        # Get the x and y data from the event
+        xdata = event.xdata
+        ydata = event.ydata
+        print(f"Clicked on point: ({xdata}, {ydata})")
+        
+        # Find the closest point in the scatter plot
+        gdp_values = np.array(df_gdp.loc[year].values)
+        life_values = np.array(df_life.loc[year].values)
+        distances = np.sqrt((gdp_values - xdata)**2 + (life_values - ydata)**2)
+        min_index = np.argmin(distances)
+        
+        # Print the country name, GDP, and life expectancy
+        country = countries[min_index]
+        gdp = gdp_values[min_index]
+        life_expectancy = life_values[min_index]
+        print(f"Country: {country}, GDP: {gdp}, Life Expectancy: {life_expectancy}")
+
+def plot_projection_life(df_init_gdp, df_init_life, year: int):
     """
     Plots the projection of life expectancy in relation to the GDP.
     Args:
@@ -17,6 +63,12 @@ def plot_projection_life(df_gdp, df_life, year: int):
         # print a warning message?
 
 
+    # Apply the str_to_float function to all columns except the first column
+    df_gdp = df_init_gdp.copy()
+    df_life = df_init_life.copy()
+    df_gdp.iloc[:, 1:] = df_gdp.iloc[:, 1:].applymap(str_to_float)
+    df_life.iloc[:, 1:] = df_life.iloc[:, 1:].applymap(str_to_float)
+
     # Transpose the DataFrames
     df_gdp = df_gdp.T
     df_life = df_life.T
@@ -27,67 +79,61 @@ def plot_projection_life(df_gdp, df_life, year: int):
     df_gdp = df_gdp.loc[df_gdp.index[1:]]
     df_life.columns = df_life.loc[df_life.index[0]]
     df_life = df_life.loc[df_life.index[1:]]
-    # Set indexes to years, convert to int
+
+
+
+
+
+    # Set indexes to years, convert to float
     df_gdp.index = df_gdp.index.astype(float)
     df_life.index = df_life.index.astype(float)
+
+    # Get the list of countries
+    countries = df_gdp.columns.tolist()
+
 
     # plot type : scatter
     fig, ax = plt.subplots()
     ax.scatter(df_gdp.loc[year], df_life.loc[year])
 
-
-    # Calculate the minimum value in the x-axis data
+    # Set the x-axis limits, to ensure plotting shows necessary values only
+    # Calculate the minimum and maximum values in the x-axis data
     min_gdp = df_gdp.loc[year].min()
-
-
-    # Determine the lowest hundred value less than or equal to the minimum value
-    # start_value = (min_gdp // 100) * 100
-
-    # Calculate the maximum value in the x-axis data
     max_gdp = df_gdp.loc[year].max()
-    print(f"min_gdp = {min_gdp}, max_gdp = {max_gdp}")
-
-
-    # Determine the lowest hundred value less than or equal to the minimum value
+    # Determine the lowest and highest hundred values for x-axis
     start_value = (min_gdp // 100) * 100
-
-    # Determine the highest hundred value equal to or greater than the maximum value
-    # end_value = ((max_gdp + 99) // 100) * 100
-    # end_value = 10 ** np.ceil(np.log10(max_gdp))
-    # end_value = max_gdp * 1.1  # Increase by 10%
     end_value = 10 ** np.floor(np.log10(max_gdp))
-    print(f"start = {start_value}, end = {end_value}")
-
-    # print(f"start = {start_value}, end = {end_value}")
-
-    # # Set x-axis limits to start at the calculated value
-    # ax.set_xlim(left=start_value)
-
+    ax.set_xlim(left=start_value, right=end_value)
 
     # Customize the x-axis to be logarithmic
     ax.set_xscale('log')
 
-    #test
-    # ax.set_xlim(left=300, right=10000)
 
-    ax.set_xlim(left=start_value, right=end_value)
-
-   # Set custom ticks to include 300 if not shown
-    xticks = [300] + [tick for tick in ax.get_xticks() if tick > 300]  # Add 300 and keep higher ticks
-    ax.set_xticks(xticks)  # Set the updated ticks
+   # Set custom ticks to include 300
+    xticks = [300] + [tick for tick in ax.get_xticks() if tick > 300]
+    ax.set_xticks(xticks)
     # Apply the custom formatter to the x-axis
     formatter = ticker.EngFormatter(sep="")
     ax.xaxis.set_major_formatter(formatter)
 
 
-    # logfmt = ticker.LogFormatterSciNotation()
-    # ax.xaxis.set_minor_formatter(logfmt)
-    # # print("x ticks=", ax.get_xticks())
+    # fig.canvas.mpl_connect('button_press_event', lambda event: handleEvent(event, df_gdp, df_life, year, countries))
 
-    # # Set x-axis ticks to include the start value, end value, and other relevant ticks
-    # ticks = [start_value] + list(ax.get_xticks()) + [end_value]
-    # # ax.set_xticks(ticks)
-    # ax.set_xticks(range(start_value, end_value))
+
+    cursor = mplcursors.cursor(
+        plt.scatter(df_gdp.astype(float), df_life.astype(float))
+    )
+    cursor.connect(
+        "add",
+        lambda sel: sel.annotation.set_text(
+            "Country: {}\nGDP: {}\nLife expectancy: {}".format(
+                df_gdp["country"][sel.index], sel.target[0], sel.target[1]
+            )
+        ),
+    )
+
+
+
 
     # Add labels, legend and title
     ax.set_xlabel('Gross domestic product')
@@ -95,6 +141,7 @@ def plot_projection_life(df_gdp, df_life, year: int):
     ax.set_title(f"{year}")
 
     plt.show()
+    # plt.ion()
 
 
 def main():
