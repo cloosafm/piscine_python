@@ -12,3 +12,13 @@ print(Ned.die.__doc__)
 print("---")
 Lyanna = Stark("Lyanna", False)
 print(Lyanna.__dict__)
+
+
+# from S1E9 import Character
+# try:
+#     # hodor = Character("hodor")
+#     ned = Stark("me", 0)
+# except TypeError as e:
+#     print(f"Error: {e}")
+# except Exception as e:
+#     print(f"An unexpected error occurred: {e}")

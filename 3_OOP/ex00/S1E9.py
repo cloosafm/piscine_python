@@ -18,6 +18,10 @@ class Character(ABC):
             - first name
             - (optional) is_alive status.
         '''
+        if not isinstance(first_name, str):
+            raise TypeError("Var 'first_name' must be a str")
+        if not isinstance(is_alive, bool):
+            raise TypeError("Var 'is_alive' must be a bool")
         self.first_name = first_name
         self.is_alive = is_alive
 
@@ -27,6 +31,7 @@ class Character(ABC):
         Kills the character.
         '''
         pass
+        # ```pass``` not actually needed, as it's an abstract method
 
 
 class Stark(Character):
