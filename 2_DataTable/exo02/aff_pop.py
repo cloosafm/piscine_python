@@ -56,6 +56,7 @@ def plot_country_data(df, country1: str, country2: str) -> None:
     convert = Convert()
     df[country1] = df[country1].apply(convert.convert_to_float)
     df[country2] = df[country2].apply(convert.convert_to_float)
+
     # Plot the data for the specified countries
     fig, ax = plt.subplots()
     ax.plot(df.index, df[country1], label=country1,

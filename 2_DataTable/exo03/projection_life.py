@@ -1,7 +1,8 @@
 from load_csv import load
-from matplotlib import pyplot as plt, ticker, widgets
+from matplotlib import pyplot as plt, ticker
 import numpy as np
 from pint import UnitRegistry
+import mplcursors
 
 
 class Convert:
@@ -27,7 +28,6 @@ class Convert:
             return self.ureg(value).to_base_units().magnitude
 
 
-
 def plot_projection_life(df_gdp, df_life, year: int):
     """
     Plots the projection of life expectancy in relation to the GDP.
@@ -36,10 +36,6 @@ def plot_projection_life(df_gdp, df_life, year: int):
         df_life : The DataFrame containing the life expectancy data.
         year (int): The year for the projection.
     """
-    # what if a country appears in only on csv file?
-        # remove it from the other csv file?
-        # print a warning message?
-
     # Transpose the DataFrames
     df_gdp = df_gdp.T
     df_life = df_life.T
@@ -63,17 +59,13 @@ def plot_projection_life(df_gdp, df_life, year: int):
     df_gdp = df_gdp.loc[common_years]
     df_life = df_life.loc[common_years]
 
-
     # Set indexes to years, convert to float
     df_gdp.index = df_gdp.index.astype(float)
     df_life.index = df_life.index.astype(float)
 
-
-
-
     # plot type : scatter
     fig, ax = plt.subplots()
-    ax.scatter(df_gdp.loc[year], df_life.loc[year])
+    scatter = ax.scatter(df_gdp.loc[year], df_life.loc[year])
 
     # Set the x-axis limits, to ensure plotting shows necessary values only
     # Calculate the minimum and maximum values in the x-axis data
@@ -87,38 +79,30 @@ def plot_projection_life(df_gdp, df_life, year: int):
     # Customize the x-axis to be logarithmic
     ax.set_xscale('log')
 
-
-   # Set custom ticks to include 300
+    # Set custom ticks to include 300
     xticks = [300] + [tick for tick in ax.get_xticks() if tick > 300]
     ax.set_xticks(xticks)
     # Apply the custom formatter to the x-axis
     formatter = ticker.EngFormatter(sep="")
     ax.xaxis.set_major_formatter(formatter)
 
-
-
     # Add labels, legend and title
     ax.set_xlabel('Gross domestic product')
     ax.set_ylabel('Life Expectancy')
     ax.set_title(f"{year}")
 
+    # Add a cursor to display the country, GDP and life expectancy
+    cursor = mplcursors.cursor(scatter)
+    cursor.connect(
+        "add",
+        lambda sel: sel.annotation.set_text(
+            "Country: {}\nGDP: {}\nLife expectancy: {}".format(
+                df_gdp.columns[sel.index], sel.target[0], sel.target[1]
+            )
+        ),
+    )
 
-    # cursor = mplcursors.cursor(
-    #     plt.scatter(df_gdp.astype(float), df_life.astype(float))
-    # )
-    # cursor = widgets.Cursor(ax, useblit=True, color='red', linewidth=2)
-    # cursor.connect(
-    #     "add",
-    #     lambda sel: sel.annotation.set_text(
-    #         "Country: {}\nGDP: {}\nLife expectancy: {}".format(
-    #             df_gdp["country"][sel.index], sel.target[0], sel.target[1]
-    #         )
-    #     ),
-    # )
-
-    cursor = widgets.Cursor(ax, useblit=True, color='red', linewidth=2)
     plt.show()
-
 
 
 def main():
@@ -135,15 +119,21 @@ def main():
         if df_gdp.shape[0] != df_life.shape[0]:
             print("Warning: The DataFrames have a different number of rows.")
             return
+        # Check both DataFrames have same countries
+        if not all((df_gdp.iloc[i, 0] == df_life.iloc[i, 0]
+                    for i in range(df_gdp.shape[0]))):
+            print("Error: DataFrames have different countries.")
+            return
         # Check if the specified year exists in the DataFrames
-        if str(year) not in df_gdp.columns and str(year) not in df_life.columns:
+        if (str(year) not in df_gdp.columns and
+                str(year) not in df_life.columns):
             print(f"Error: The year {year} is inexistent in both DataFrames.")
             return
         elif str(year) not in df_gdp.columns:
-            print(f"Error: The year {year} is inexistent in the GDP DataFrame.")
+            print(f"Error: Year {year} is inexistent in the GDP DataFrame.")
             return
         elif str(year) not in df_life.columns:
-            print(f"Error: The year {year} is inexistent in the Life Expectancy DataFrame.")
+            print(f"Error: Year {year} is inexistent in the LE DataFrame.")
             return
         plot_projection_life(df_gdp, df_life, year)
 

@@ -25,11 +25,7 @@ def plot_country_data(df, country: str):
     # Plot the data for the specified country
     plt.plot(df_transposed.index, df_transposed[country])
     # Customize ticks on the x-axis
-    min_year = int(df_transposed.index.min())
-    max_year = int(df_transposed.index.max())
-    plt.xticks(range(min_year, max_year, 40))
-    # plt.xticks(df_transposed.index[::40])
-
+    plt.xticks(df_transposed.index[::40])
 
     # Add labels and title
     plt.xlabel('Year')
