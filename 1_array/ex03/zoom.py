@@ -50,7 +50,7 @@ def main():
     animal_array = ft_load("animal.jpeg")
     if animal_array is not None:
         print(animal_array)
-        zoom_factor = 1.25
+        zoom_factor = 2.25
         new_width = 400
         new_height = 400
         channels = 1

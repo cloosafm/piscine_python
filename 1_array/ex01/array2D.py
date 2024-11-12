@@ -42,6 +42,8 @@ def slice_me(family: list, start: int, end: int) -> list:
         print(f"AssertionError: {e}")
         return None
     fam_array = array(family)
+    if fam_array.ndim != 2:
+        raise AssertionError("need a 2D array")
     print(f"My shape is : {fam_array.shape}")
     sliced_fam = fam_array[start:end]
     print(f"My new shape is : {sliced_fam.shape}")
