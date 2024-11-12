@@ -17,10 +17,6 @@ class Character(ABC):
             - first name
             - (optional) is_alive status.
         '''
-        if not isinstance(first_name, str):
-            raise TypeError("Var 'first_name' must be a str")
-        if not isinstance(is_alive, bool):
-            raise TypeError("Var 'is_alive' must be a bool")
         self.first_name = first_name
         self.is_alive = is_alive
 
@@ -32,22 +28,30 @@ class Character(ABC):
         pass
         # ```pass``` not actually needed, as it's an abstract method
 
+    # getters and setters:
+    #   method and vars can't have same name : add an '_'
+    #   so getter will return self._<var> instead of self.<var>
+    #   and setter will set 'self._<var> = <var>' instead of self.<var>
+
     # getter
     @property
     def first_name(self):
         '''
         Return the first name of the character.
         '''
-        return self.first_name
+        return self._first_name
 
-    # setter
+    # setter - 
     @first_name.setter
     def first_name(self, first_name):
         '''
         Set the first name of the character.
         '''
-        # add error mngmt
-        self.first_name = first_name
+        if not first_name:
+            raise ValueError("Missing 'first_name'")
+        if not isinstance(first_name, str):
+            raise TypeError("Var 'first_name' must be a str")
+        self._first_name = first_name
 
     # getter
     @property
@@ -55,7 +59,7 @@ class Character(ABC):
         '''
         Return the status of the character.
         '''
-        return self.is_alive
+        return self._is_alive
 
     # setter
     @is_alive.setter
@@ -63,8 +67,9 @@ class Character(ABC):
         '''
         Set the character alive or dead.
         '''
-        # add error mngmt
-        self.is_alive = is_alive
+        if not isinstance(is_alive, bool):
+            raise TypeError("Var 'is_alive' must be a bool")
+        self._is_alive = is_alive
 
 
 class Stark(Character):
