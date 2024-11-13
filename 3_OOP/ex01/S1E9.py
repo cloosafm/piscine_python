@@ -19,6 +19,9 @@ class Character(ABC):
         '''
         self.first_name = first_name
         self.is_alive = is_alive
+        self._family_name: str = ''
+        self._eyes: str = ''
+        self._hairs: str = ''
 
     @abstractmethod
     def die(self):
@@ -29,9 +32,9 @@ class Character(ABC):
         # ```pass``` not actually needed, as it's an abstract method
 
     # getters and setters:
-    #   method and vars can't have same name : add an '_'
-    #   so getter will return self._<var> instead of self.<var>
-    #   and setter will set 'self._<var> = <var>' instead of self.<var>
+    #  method and vars can't have same name : prepend an '_' to var name
+    #  -> getter will return self._<var> instead of self.<var>
+    #  -> setter will set 'self._<var> = <var>' instead of 'self.<var> = <var>'
 
     # getter
     @property
@@ -70,6 +73,64 @@ class Character(ABC):
         if not isinstance(is_alive, bool):
             raise TypeError("Var 'is_alive' must be a bool")
         self._is_alive = is_alive
+
+    # getter
+    @property
+    def family_name(self):
+        '''
+        Return the family name of the character.
+        '''
+        return self._family_name
+
+    # setter - 
+    @family_name.setter
+    def family_name(self, family_name):
+        '''
+        Set the family name of the character.
+        '''
+        if not isinstance(family_name, str):
+            raise TypeError("Var 'family_name' must be a str")
+        self._family_name = family_name
+
+    # getter
+    @property
+    def eyes(self):
+        '''
+        Return the eye color of the character.
+        '''
+        return self._eyes
+
+    # setter - 
+    @eyes.setter
+    def eyes(self, eyes):
+        '''
+        Set the eye color of the character.
+        '''
+        if not eyes:
+            raise ValueError("Missing 'eyes'")
+        if not isinstance(eyes, str):
+            raise TypeError("Var 'eyes' must be a str")
+        self._eyes = eyes
+
+    # getter
+    @property
+    def hairs(self):
+        '''
+        Return the hair color of the character.
+        '''
+        return self._hairs
+
+    # setter - 
+    @hairs.setter
+    def hairs(self, hairs):
+        '''
+        Set the hair color of the character.
+        '''
+        if not hairs:
+            raise ValueError("Missing 'hairs'")
+        if not isinstance(hairs, str):
+            raise TypeError("Var 'hairs' must be a str")
+        self._hairs = hairs
 
 
 class Stark(Character):
