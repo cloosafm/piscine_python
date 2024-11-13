@@ -3,6 +3,8 @@ Robert = Baratheon("Robert")
 print(Robert.__dict__)
 print(Robert.__str__)
 print(Robert.__repr__)
+# print(Robert.__str__())  # better way to call __str__ method
+# print(Robert.__repr__())  # better way to call __repr__ method
 print(Robert.is_alive)
 Robert.die()
 print(Robert.is_alive)
