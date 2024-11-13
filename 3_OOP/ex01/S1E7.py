@@ -11,19 +11,53 @@ class Baratheon(Character):
             - first name
             - (optional) is_alive status.
         '''
-        # self.first_name = first_name
-        # self.is_alive = is_alive
-        self.create_baratheon(first_name, is_alive)
-
-    def create_baratheon(self, first_name: str, is_alive: bool = True):
-        """Creates a Baratheon character."""
         self.first_name = first_name
         self.is_alive = is_alive
         self.family_name = "Baratheon"
         self.eyes = "brown"
         self.hairs = "dark"
 
-    def die(self):
+    # getter
+    @property
+    def eyes(self):
+        '''
+        Return the eye color of the character.
+        '''
+        return self._eyes
+
+    # setter
+    @eyes.setter
+    def eyes(self, eyes):
+        '''
+        Set the eye color of the character.
+        '''
+        if not eyes:
+            raise ValueError("Missing 'eyes'")
+        if not isinstance(eyes, str):
+            raise TypeError("Var 'eyes' must be a str")
+        self._eyes = eyes
+
+    # getter
+    @property
+    def hairs(self):
+        '''
+        Return the hair color of the character.
+        '''
+        return self._hairs
+
+    # setter
+    @hairs.setter
+    def hairs(self, hairs):
+        '''
+        Set the hair color of the character.
+        '''
+        if not hairs:
+            raise ValueError("Missing 'hairs'")
+        if not isinstance(hairs, str):
+            raise TypeError("Var 'hairs' must be a str")
+        self._hairs = hairs
+
+    def die(self):  # need to keep it as it is in the base class
         '''
         Kills the Baratheon character.
         '''
@@ -31,7 +65,7 @@ class Baratheon(Character):
 
 
 class Lannister(Character):
-    """Inherit from abstract Character class"""
+    """Representing the Lannister family."""
     def __init__(self, first_name: str, is_alive: bool = True):
         '''
         Constructor.
@@ -39,17 +73,76 @@ class Lannister(Character):
             - first name
             - (optional) is_alive status.
         '''
-        self.create_lannister(first_name, is_alive)
-
-    def create_lannister(self, first_name: str, is_alive: bool = True):
-        """Creates a Lannister character."""
         self.first_name = first_name
         self.is_alive = is_alive
         self.family_name = "Lannister"
         self.eyes = "blue"
         self.hairs = "light"
 
-    def die(self):
+    @classmethod
+    def create_lannister(cls, first_name, is_alive):
+        """Creates a Lannister character."""
+        return cls(first_name, is_alive)
+
+    # getter
+    @property
+    def family_name(self):
+        '''
+        Return the family name of the character.
+        '''
+        return self._family_name
+
+    # setter
+    @family_name.setter
+    def family_name(self, family_name):
+        '''
+        Set the family name of the character.
+        '''
+        if not isinstance(family_name, str):
+            raise TypeError("Var 'family_name' must be a str")
+        self._family_name = family_name
+
+    # getter
+    @property
+    def eyes(self):
+        '''
+        Return the eye color of the character.
+        '''
+        return self._eyes
+
+    # setter
+    @eyes.setter
+    def eyes(self, eyes):
+        '''
+        Set the eye color of the character.
+        '''
+        if not eyes:
+            raise ValueError("Missing 'eyes'")
+        if not isinstance(eyes, str):
+            raise TypeError("Var 'eyes' must be a str")
+        self._eyes = eyes
+
+    # getter
+    @property
+    def hairs(self):
+        '''
+        Return the hair color of the character.
+        '''
+        return self._hairs
+
+    # setter
+    @hairs.setter
+    def hairs(self, hairs):
+        '''
+        Set the hair color of the character.
+        '''
+        if not hairs:
+            raise ValueError("Missing 'hairs'")
+        if not isinstance(hairs, str):
+            raise TypeError("Var 'hairs' must be a str")
+        self._hairs = hairs
+
+    def die(self):  # need to keep it as it is in the base class
         '''
         Kills the Lannister character.
         '''
