@@ -7,4 +7,8 @@ def generate_id() -> str:
 
 @dataclass
 class Student:
-    #your code here
+    def __init__(self, name: str, surname: str):
+        self.name = name
+        self.surname = surname
+        self.active = True
+        self.id = id: str = field(default_factory = generate_id)
