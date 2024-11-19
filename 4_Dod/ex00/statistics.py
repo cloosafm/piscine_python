@@ -3,7 +3,7 @@ def arg_ok(*args: any) -> bool:
         Args:
             *args: list of numbers
         Returns:
-            True if all arguments are numbers, False otherwise
+            True if all arguments are numbers, False and "ERROR" otherwise
     """
     if not args:
         print("ERROR")
