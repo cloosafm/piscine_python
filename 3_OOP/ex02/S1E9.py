@@ -33,8 +33,7 @@ class Character(ABC):
     @abstractmethod
     def die(self):
         """
-        Kill the character.
-        """
+        Abstract method to kill the character."""
         pass
         # ```pass``` not actually needed, as it's an abstract method
 
@@ -47,16 +46,14 @@ class Character(ABC):
     @property
     def first_name(self):
         """
-        Return the first name of the character.
-        """
+        Return the first name of the character."""
         return self._first_name
 
     # setter
     @first_name.setter
     def first_name(self, first_name):
         """
-        Set the first name of the character.
-        """
+        Set the first name of the character."""
         if not first_name:
             raise ValueError("Missing 'first_name'")
         if not isinstance(first_name, str):
@@ -67,16 +64,14 @@ class Character(ABC):
     @property
     def is_alive(self):
         """
-        Return the status of the character.
-        """
+        Return the status of the character."""
         return self._is_alive
 
     # setter
     @is_alive.setter
     def is_alive(self, is_alive):
         """
-        Set the character alive or dead.
-        """
+        Set the character alive or dead."""
         if not isinstance(is_alive, bool):
             raise TypeError("Var 'is_alive' must be a bool")
         self._is_alive = is_alive
@@ -85,16 +80,14 @@ class Character(ABC):
     @property
     def family_name(self):
         """
-        Return the family name of the character.
-        """
+        Return the family name of the character."""
         return self._family_name
 
     # setter
     @family_name.setter
     def family_name(self, family_name):
         """
-        Set the family name of the character.
-        """
+        Set the family name of the character."""
         if not isinstance(family_name, str):
             raise TypeError("Var 'family_name' must be a str")
         self._family_name = family_name
@@ -103,16 +96,14 @@ class Character(ABC):
     @property
     def eyes(self):
         """
-        Return the eye color of the character.
-        """
+        Return the eye color of the character."""
         return self._eyes
 
     # setter
     @eyes.setter
     def eyes(self, eyes):
         """
-        Set the eye color of the character.
-        """
+        Set the eye color of the character."""
         if not eyes:
             raise ValueError("Missing 'eyes'")
         if not isinstance(eyes, str):
@@ -123,16 +114,14 @@ class Character(ABC):
     @property
     def hairs(self):
         """
-        Return the hair color of the character.
-        """
+        Return the hair color of the character."""
         return self._hairs
 
     # setter
     @hairs.setter
     def hairs(self, hairs):
         """
-        Set the hair color of the character.
-        """
+        Set the hair color of the character."""
         if not hairs:
             raise ValueError("Missing 'hairs'")
         if not isinstance(hairs, str):
@@ -167,7 +156,26 @@ class Stark(Character):
 
     def die(self):
         """
-        Kill the Stark character
-        Set their is_alive status to False.
-        """
+        Kill the Stark character by setting their is_alive status to False."""
         self.is_alive = False
+
+
+# from DiamondTrap import King
+
+# Joffrey = King("Joffrey")
+# print(Joffrey.__dict__)
+# Joffrey.set_eyes("blue")
+# Joffrey.set_hairs("light")
+# print(Joffrey.get_eyes())
+# print(Joffrey.get_hairs())
+# print(Joffrey.__dict__)
+
+# from DiamondTrapOK import King
+
+# Joffrey = King("Joffrey")
+# print(Joffrey.__dict__)
+# Joffrey._eyes="blue"
+# Joffrey._hairs="light"
+# print(Joffrey.eyes)
+# print(Joffrey.hairs)
+# print(Joffrey.__dict__)

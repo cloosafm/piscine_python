@@ -32,8 +32,7 @@ class Character(ABC):
     @abstractmethod
     def die(self):
         """
-        Abstract method to kill the character.
-        """
+        Abstract method to kill the character."""
         pass
         # ```pass``` not actually needed, as it's an abstract method
 
@@ -46,16 +45,14 @@ class Character(ABC):
     @property
     def first_name(self):
         """
-        Return the first name of the character.
-        """
+        Return the first name of the character."""
         return self._first_name
 
     # setter
     @first_name.setter
     def first_name(self, first_name):
         """
-        Set the first name of the character.
-        """
+        Set the first name of the character."""
         if not first_name:
             raise ValueError("Missing 'first_name'")
         if not isinstance(first_name, str):
@@ -66,16 +63,14 @@ class Character(ABC):
     @property
     def is_alive(self):
         """
-        Return the status of the character.
-        """
+        Return the status of the character."""
         return self._is_alive
 
     # setter
     @is_alive.setter
     def is_alive(self, is_alive):
         """
-        Set the character alive or dead.
-        """
+        Set the character alive or dead."""
         if not isinstance(is_alive, bool):
             raise TypeError("Var 'is_alive' must be a bool")
         self._is_alive = is_alive
@@ -108,7 +103,33 @@ class Stark(Character):
 
     def die(self):
         """
-        Kill the Stark character
-        Set their is_alive status to False.
-        """
+        Kill the Stark character by setting their is_alive status to False."""
         self.is_alive = False
+
+
+# from S1E9 import Character, Stark
+# Ned = Stark("Ned")
+# print(Ned.__dict__)
+# print(Ned.is_alive)
+# Ned.die()
+# print(Ned.is_alive)
+# print(Ned.__doc__)
+# print(Ned.__init__.__doc__)
+# print(Ned.die.__doc__)
+# print("---")
+# Lyanna = Stark("Lyanna", False)
+# print(Lyanna.__dict__)
+
+
+# from S1E9 import Character
+# hodor = Character("hodor")
+
+
+# from S1E9 import Character
+# try:
+#     hodor = Character("hodor")
+#     # ned = Stark("me", 0)
+# except TypeError as e:
+#     print(f"Error: {e}")
+# except Exception as e:
+#     print(f"An unexpected error occurred: {e}")

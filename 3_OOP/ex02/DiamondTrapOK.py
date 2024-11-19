@@ -27,33 +27,41 @@ class King(Lannister, Baratheon):
         """
         super(King, self).__init__(first_name, is_alive)
 
-    def get_eyes(self):
-        """Bad practice way to do a getter,
-                can't use @property because name is not that of the attribute
-            Return the eye color of the character.
+    # getter
+    @property
+    def eyes(self):
         """
-        return self.eyes
+        Return the eye color of the character."""
+        return self._eyes
 
-    def set_eyes(self, eyes):
-        """Bad practice way to do a setter
-            can't use @<var_name>.setter because (see getter issue)
-            Set the eye color of the character.
+    # setter
+    @eyes.setter
+    def eyes(self, eyes):
         """
-        self.eyes = eyes
+        Set the eye color of the character."""
+        if not eyes:
+            raise ValueError("Missing 'eyes'")
+        if not isinstance(eyes, str):
+            raise TypeError("Var 'eyes' must be a str")
+        self._eyes = eyes
 
-    def get_hairs(self):
-        """Bad practice way to do a getter,
-                can't use @property because name is not that of the attribute
-            Return the hair color of the character.
+    # getter
+    @property
+    def hairs(self):
         """
-        return self.hairs
+        Return the hair color of the character."""
+        return self._hairs
 
-    def set_hairs(self, hairs):
-        """Bad practice way to do a setter
-            can't use @<var_name>.setter because (see getter issue)
-            Set the hair color of the character.
+    # setter
+    @hairs.setter
+    def hairs(self, hairs):
         """
-        self.hairs = hairs
+        Set the hair color of the character."""
+        if not hairs:
+            raise ValueError("Missing 'hairs'")
+        if not isinstance(hairs, str):
+            raise TypeError("Var 'hairs' must be a str")
+        self._hairs = hairs
 
     def die(self):  # need to keep it, as it is in the base class
         """
