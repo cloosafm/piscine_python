@@ -1,16 +1,18 @@
 from load_csv import load
 from matplotlib import pyplot as plt, ticker
-from pint import UnitRegistry
 
 
 class Convert:
     """Class for converting strs with units to actual numbers"""
+
     def __init__(self):
         """Constructor for the Convert class"""
-        self.ureg = UnitRegistry()
-        self.ureg.define("thousand = 1e3 = k")
-        self.ureg.define("million = 1e6 = M")
-        self.ureg.define("billion = 1e9 = B")
+        # Define a dictionary for unit conversions
+        self.unit_map = {
+            'k': 1e3,      # Thousand
+            'M': 1e6,      # Million
+            'B': 1e9       # Billion
+        }
 
     def convert_to_float(self, value: str) -> float:
         """
@@ -21,9 +23,20 @@ class Convert:
             float: The value as a float.
         """
         try:
+            # If the value is already a number, return it as float
             return float(value)
         except ValueError:
-            return self.ureg(value).to_base_units().magnitude
+            pass
+
+        # Check for units in the value string
+        for unit, multiplier in self.unit_map.items():
+            if value.endswith(unit):
+                # Extract number and multiply by the corresponding unit
+                number = float(value[:-len(unit)])
+                return number * multiplier
+
+        # If no unit is found, raise an exception
+        raise ValueError(f"Unknown unit in value: {value}")
 
 
 def plot_country_data(df, country1: str, country2: str) -> None:
@@ -54,8 +67,12 @@ def plot_country_data(df, country1: str, country2: str) -> None:
 
     # Convert population values to floats
     convert = Convert()
-    df[country1] = df[country1].apply(convert.convert_to_float)
-    df[country2] = df[country2].apply(convert.convert_to_float)
+    try:
+        df[country1] = df[country1].apply(convert.convert_to_float)
+        df[country2] = df[country2].apply(convert.convert_to_float)
+    except ValueError as e:
+        print(f"Error: {e}")
+        return None
 
     # Plot the data for the specified countries
     fig, ax = plt.subplots()

@@ -1,18 +1,20 @@
 from load_csv import load
 from matplotlib import pyplot as plt, ticker
-import numpy as np
-from pint import UnitRegistry
+from math import log10, floor
 import mplcursors
 
 
 class Convert:
     """Class for converting strs with units to actual numbers"""
+
     def __init__(self):
         """Constructor for the Convert class"""
-        self.ureg = UnitRegistry()
-        self.ureg.define("thousand = 1e3 = k")
-        self.ureg.define("million = 1e6 = M")
-        self.ureg.define("billion = 1e9 = B")
+        # Define a dictionary for unit conversions
+        self.unit_map = {
+            'k': 1e3,      # Thousand
+            'M': 1e6,      # Million
+            'B': 1e9       # Billion
+        }
 
     def convert_to_float(self, value: str) -> float:
         """
@@ -23,9 +25,20 @@ class Convert:
             float: The value as a float.
         """
         try:
+            # If the value is already a number, return it as float
             return float(value)
         except ValueError:
-            return self.ureg(value).to_base_units().magnitude
+            pass
+
+        # Check for units in the value string
+        for unit, multiplier in self.unit_map.items():
+            if value.endswith(unit):
+                # Extract number and multiply by the corresponding unit
+                number = float(value[:-len(unit)])
+                return number * multiplier
+
+        # If no unit is found, raise an exception
+        raise ValueError(f"Unknown unit in value: {value}")
 
 
 def plot_projection_life(df_gdp, df_life, year: int):
@@ -48,7 +61,11 @@ def plot_projection_life(df_gdp, df_life, year: int):
 
     # Convert GDP values to float
     convert = Convert()
-    df_gdp = df_gdp.map(convert.convert_to_float)
+    try:
+        df_gdp = df_gdp.map(convert.convert_to_float)
+    except ValueError as e:
+        print(f"Error: {e}")
+        return None
 
     # Align the DataFrames based on their common columns and indexes
     common_countries = df_gdp.columns.intersection(df_life.columns)
@@ -73,7 +90,7 @@ def plot_projection_life(df_gdp, df_life, year: int):
     max_gdp = df_gdp.loc[year].max()
     # Determine the lowest and highest hundred values for x-axis
     start_value = (min_gdp // 100) * 100
-    end_value = 10 ** np.floor(np.log10(max_gdp))
+    end_value = 10 ** floor(log10(max_gdp))
     ax.set_xlim(left=start_value, right=end_value)
 
     # Customize the x-axis to be logarithmic
