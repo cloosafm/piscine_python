@@ -1,7 +1,7 @@
 # ft_filter
 
 ## Use this package as you would use the built-in function filter()
-You need to import the function ft_filtering from the ft_filter package
+First, you need to import the function ft_filtering from the ft_filter package
 
 ## How to build a package
 If you want to build your own package, take a look at :
