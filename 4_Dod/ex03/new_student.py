@@ -9,6 +9,14 @@ def generate_id() -> str:
 
 @dataclass
 class Student:
+    """
+    A class representing a student.
+    :param name: The student's name.
+    :param surname: The student's surname.
+    :param active: The student's status.
+    :param login: The student's login.
+    :param id: The student's id.
+    """
     name: str
     surname: str
     active: bool = True

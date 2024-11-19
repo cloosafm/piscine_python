@@ -35,6 +35,9 @@ def outer(x: int | float, function) -> object:
     count = 0
 
     def inner() -> float:
+        """
+        Function that takes no argument and return the calculation result.
+        """
         nonlocal count
         res = function(x)
         for i in range(count):
