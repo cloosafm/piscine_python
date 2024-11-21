@@ -1,7 +1,7 @@
 from load_csv import load
 from matplotlib import pyplot as plt, ticker
 from math import log10, floor
-# import mplcursors
+import mplcursors
 
 
 class Convert:
@@ -82,8 +82,7 @@ def plot_projection_life(df_gdp, df_life, year: int):
 
     # plot type : scatter
     fig, ax = plt.subplots()
-    ax.scatter(df_gdp.loc[year], df_life.loc[year])
-    # scatter = ax.scatter(df_gdp.loc[year], df_life.loc[year])
+    scatter = ax.scatter(df_gdp.loc[year], df_life.loc[year])
 
     # Set the x-axis limits, to ensure plotting shows necessary values only
     # Calculate the minimum and maximum values in the x-axis data
@@ -110,15 +109,15 @@ def plot_projection_life(df_gdp, df_life, year: int):
     ax.set_title(f"{year}")
 
     # Add a cursor to display the country, GDP and life expectancy
-    # cursor = mplcursors.cursor(scatter)
-    # cursor.connect(
-    #     "add",
-    #     lambda sel: sel.annotation.set_text(
-    #         "Country: {}\nGDP: {}\nLife expectancy: {}".format(
-    #             df_gdp.columns[sel.index], sel.target[0], sel.target[1]
-    #         )
-    #     ),
-    # )
+    cursor = mplcursors.cursor(scatter)
+    cursor.connect(
+        "add",
+        lambda sel: sel.annotation.set_text(
+            "Country: {}\nGDP: {}\nLife expectancy: {}".format(
+                df_gdp.columns[sel.index], sel.target[0], sel.target[1]
+            )
+        ),
+    )
 
     plt.show()
 
