@@ -22,3 +22,6 @@ This means class creation, magic/dunder methods and use of decorators.
 ## Day 4 : "DoD"
 This is the last day of this piscine, focused on data-oriented design.
 We look into how data is accessed, by using wrapper functions and dataclass.
+
+## 42 score
+This project was fully completed at 100% (no bonus available)
